@@ -6,3 +6,4 @@ E:\c#\BumpMapper\BumpMapper\obj\x86\Debug\BumpMapper.csproj.GenerateResource.Cac
 E:\c#\BumpMapper\BumpMapper\obj\x86\Debug\BumpMapper.exe
 E:\c#\BumpMapper\BumpMapper\obj\x86\Debug\BumpMapper.pdb
 E:\c#\BumpMapper\BumpMapper\obj\x86\Debug\BumpMapper.csprojResolveAssemblyReference.cache
+E:\c#\BumpMapper\BumpMapper\obj\x86\Debug\BumpMapper.EditForm.resources

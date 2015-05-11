@@ -82,7 +82,9 @@ namespace BumpMapper
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-
+            EditForm f = new EditForm();
+            f.SetImage((Bitmap)filterImage);
+            f.ShowDialog();
         }
 
         private void trackBarPower_Scroll(object sender, EventArgs e)
@@ -168,9 +170,9 @@ namespace BumpMapper
                 int srcPos = 0;
 
                 // for every pixel of the image
-                for (int y = filterHalfHigh; y < src.Height - filterHalfHigh; y++)
+                for (int y = 0; y < src.Height; y++)
                 {
-                    for (int x = filterHalfWide; x < src.Width - filterHalfWide; x++)
+                    for (int x = 0; x < src.Width; x++)
                     {
                         int r = 128 * rmul, g = 128 * gmul, b = 0;
                         srcPos = x * 4 + y * sourceData.Stride;
@@ -178,13 +180,15 @@ namespace BumpMapper
                         // for every value in the filter
                         for (int fy = -filterHalfHigh; fy <= filterHalfHigh; fy++)
                         {
-                            for (int fx = -filterHalfWide; fx <= filterHalfWide; fx++)
-                            {
-                                int f = filter[fy + filterHalfHigh, fx + filterHalfWide];
-                                int off = srcPos + fx * 4 + fy * sourceData.Stride;
-                                r += pixelBuffer[off + 2] * f * rmul;
-                                g += pixelBuffer[off + 1] * f * gmul;
-                            }
+                            if (y + fy >= 0 && y + fy < src.Height)
+                                for (int fx = -filterHalfWide; fx <= filterHalfWide; fx++)
+                                    if (x + fx >= 0 && x + fx < src.Width)
+                                    {
+                                        int f = filter[fy + filterHalfHigh, fx + filterHalfWide];
+                                        int off = srcPos + fx * 4 + fy * sourceData.Stride;
+                                        r += pixelBuffer[off + 2] * f * rmul;
+                                        g += pixelBuffer[off + 1] * f * gmul;
+                                    }
                         }
 
                         resultBuffer[srcPos + 2] += (byte)(Clamp(r, 0, 255));
